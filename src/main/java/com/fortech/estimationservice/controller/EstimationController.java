@@ -4,14 +4,11 @@ import com.fortech.estimationservice.model.Distance;
 import com.fortech.estimationservice.model.dto.EstimationDTO;
 import com.fortech.estimationservice.repository.DistanceRepository;
 import com.fortech.estimationservice.service.DistanceService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class EstimationController {
 
@@ -26,11 +23,20 @@ public class EstimationController {
     @GetMapping(value = "/delivery")
     public EstimationDTO getEstimationDelivery(@RequestParam(name = "id") String productId,
                                                @RequestParam(name = "howMany") int howMany,
-                                               @RequestParam(name = "location") Map<String, Integer> location) {
+                                               @RequestParam(name = "daysToArriveInDeposit") Integer daysToArriveInDeposit,
+                                               @RequestParam(name = "country") String country) {
 
-        return distanceService.getEstimationDeliveryDate(productId, location, howMany);
+        Integer daysToCustomer = distanceService.getEstimationDeliveryDate(country);
+        return new EstimationDTO(productId, howMany, daysToArriveInDeposit, country, daysToCustomer);
     }
 
+    /**
+     * Helper method to add data in DB
+     *
+     * @param country  name of country
+     * @param distance distance from out location
+     * @return all
+     */
     @PostMapping("/add")
     public List<Distance> add(@RequestParam(name = "country") String country,
                               @RequestParam(name = "distance") Integer distance) {

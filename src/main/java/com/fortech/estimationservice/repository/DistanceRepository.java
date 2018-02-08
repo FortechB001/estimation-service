@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DistanceRepository extends MongoRepository<Distance, String>{
 
-    Distance findByCountry(String country);
+    Distance findByCountryIgnoreCase(String country);
 }

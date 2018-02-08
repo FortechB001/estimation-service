@@ -5,7 +5,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Map;
 
 @Data
 @RequiredArgsConstructor
@@ -15,10 +14,11 @@ public class EstimationDTO implements Serializable {
     private String productId;
     @NonNull
     private Integer howMany;
-
-    private Integer daysToArrive;
-
-    //<Country, how many are in stock>
+    //when the product will arrive in our deposit - in days
     @NonNull
-    private Map<String, Integer> stock;
+    private Integer daysToArriveInDeposit;
+    @NonNull
+    private String country;
+    @NonNull
+    private Integer daysToCustomer;
 }
