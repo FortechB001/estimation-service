@@ -10,6 +10,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping("/estimation")
 public class EstimationController {
 
     private DistanceService distanceService;
@@ -26,8 +27,13 @@ public class EstimationController {
                                                @RequestParam(name = "daysToArriveInDeposit") Integer daysToArriveInDeposit,
                                                @RequestParam(name = "country") String country) {
 
-        Integer daysToCustomer = distanceService.getEstimationDeliveryDate(country);
+        Integer daysToCustomer = distanceService.getEstimationDeliveryDate(country) + daysToArriveInDeposit;
         return new EstimationDTO(productId, howMany, daysToArriveInDeposit, country, daysToCustomer);
+    }
+
+    @GetMapping(value = "/countries")
+    public List<String> getCountryListWhereWeDeliver() {
+        return distanceService.getAllCountries();
     }
 
     /**
