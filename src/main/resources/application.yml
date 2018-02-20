@@ -1,6 +1,7 @@
 spring:
   application:
-    name: estimation-service
+#    name: estimation-service
+    name: ESTIMATION-SERV
 
 server:
   port: 8085
